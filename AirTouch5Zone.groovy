@@ -44,35 +44,28 @@ def off() {
 def setSetpoint(setpoint) {
     def raw = (setpoint.toBigDecimal() * 10 - 100).toInteger()
     if (raw < 0 || raw > 250) { log.warn "setSetpoint: ${setpoint}°C out of range (10–35°C)"; return }
-    // byte2 = 0xA0: zone-setting bits 8-6 = 101 ("set target setpoint").
-    // The AirTouch protocol switches the zone to temperature-control mode as part of this
-    // command — no separate mode-change message exists in the protocol.
-    parent.zoneControl(zoneNum(), 0xA0, raw)
+    // byte2 = 0xA3: zone-setting bits 7-5 = 101 (set target setpoint) | power bits 1-0 = 11 (set on).
+    // The AirTouch requires power bits = ON alongside the zone setting, otherwise it ignores the command.
+    parent.zoneControl(zoneNum(), 0xA3, raw)
     sendEvent(name: "controlMethod", value: "temperature")
 }
 
 def setOpenPercentage(percentage) {
-    def pct = percentage.toInteger().clamp(0, 100)
-    // byte2 = 0x80: zone-setting bits 8-6 = 100 ("set open percentage").
-    // The AirTouch protocol switches the zone to percentage-control mode as part of this
-    // command — no separate mode-change message exists in the protocol.
-    parent.zoneControl(zoneNum(), 0x80, pct)
+    def pct = Math.max(0, Math.min(100, percentage.toInteger()))
+    // byte2 = 0x83: zone-setting bits 7-5 = 100 (set open percentage) | power bits 1-0 = 11 (set on).
+    // The AirTouch requires power bits = ON alongside the zone setting, otherwise it ignores the command.
+    parent.zoneControl(zoneNum(), 0x83, pct)
     sendEvent(name: "controlMethod", value: "percentage")
 }
 
 def setControlMethod(String method) {
     if (method == "temperature") {
-        // Switching to temperature control requires providing a setpoint.
-        // Re-send the current setpoint (default 22°C) with the 0xA0 setting bits,
-        // which tells the AirTouch controller to switch mode and apply the value.
         def sp  = (device.currentValue("setpoint") ?: 22).toBigDecimal()
-        def raw = (sp * 10 - 100).toInteger().clamp(0, 250)
-        parent.zoneControl(zoneNum(), 0xA0, raw)
+        def raw = Math.max(0, Math.min(250, (sp * 10 - 100).toInteger()))
+        parent.zoneControl(zoneNum(), 0xA3, raw)
     } else {
-        // Switching to percentage control requires providing an open percentage.
-        // Re-send the current percentage (default 50%) with the 0x80 setting bits.
-        def pct = (device.currentValue("openPercentage") ?: 50).toInteger().clamp(0, 100)
-        parent.zoneControl(zoneNum(), 0x80, pct)
+        def pct = Math.max(0, Math.min(100, (device.currentValue("openPercentage") ?: 50).toInteger()))
+        parent.zoneControl(zoneNum(), 0x83, pct)
     }
     sendEvent(name: "controlMethod", value: method)
 }

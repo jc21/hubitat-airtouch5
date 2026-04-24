@@ -10,6 +10,8 @@ file that will help anyone improve on this plugin and pickup where Claude left o
 - Connects to your Airtouch 5 Controller via TCP
 - Monitors temperature, fan speed, mode, set temp
 - Queries for all Zones and creates sub-devices for each
+- Set the on/off, temp, mode, fan speed for the Controller
+- Set the on/off, temperature or open % for each zone
 
 ![Example Devices](devices.png)
 
