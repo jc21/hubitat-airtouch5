@@ -1,0 +1,27 @@
+{
+  "packageName": "AirTouch 5 Drivers",
+  "author": "Jamie Curnow",
+  "version": "1.0.0",
+  "minimumHEVersion": "2.3.0",
+  "licenseFile": "https://github.com/jc21/hubitat-airtouch5/blob/main/LICENSE",
+  "documentationLink": "https://github.com/jc21/hubitat-airtouch5",
+  "communityLink": "https://community.hubitat.com/t/airtouch-5-drivers-for-controller-and-zones/163437",
+  "dateReleased": "2026-04-24",
+  "releaseNotes": "Initial Release",
+  "drivers": [
+    {
+      "id": "b9431446-f4e8-4d63-8e4e-7ca11dd5c7e5",
+      "name": "AirTouch 5 Controller",
+      "namespace": "airtouch5",
+      "location": "https://raw.githubusercontent.com/jc21/hubitat-airtouch5/refs/tags/v1.0.0/AirTouch5.groovy",
+      "required": true
+    },
+    {
+      "id": "30e532c6-3d69-49f9-bbc0-7b22ee697f45",
+      "name": "AirTouch 5 Zone",
+      "namespace": "airtouch5",
+      "location": "https://raw.githubusercontent.com/jc21/hubitat-airtouch5/refs/tags/v1.0.0/AirTouch5Zone.groovy",
+      "required": true
+    }
+  ]
+}

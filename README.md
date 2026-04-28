@@ -1,4 +1,4 @@
-# Hubitat Driver for Airtouch 5 AC Controllers
+# Hubitat Driver for AirTouch 5 AC Controllers
 
 A custom Hubitat Elevation driver for monitoring and controlling your **Airtouch 5** AC Controller directly from your home automation platform.
 
