@@ -14,6 +14,7 @@
       "name": "AirTouch 5 Controller",
       "namespace": "airtouch5",
       "location": "https://raw.githubusercontent.com/jc21/hubitat-airtouch5/refs/tags/v1.0.0/AirTouch5.groovy",
+      "version": "1.0.0",
       "required": true
     },
     {
@@ -21,6 +22,7 @@
       "name": "AirTouch 5 Zone",
       "namespace": "airtouch5",
       "location": "https://raw.githubusercontent.com/jc21/hubitat-airtouch5/refs/tags/v1.0.0/AirTouch5Zone.groovy",
+      "version": "1.0.0",
       "required": true
     }
   ]
